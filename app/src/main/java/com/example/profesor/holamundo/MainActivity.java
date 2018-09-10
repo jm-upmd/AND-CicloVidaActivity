@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     static final String TAG = "test_actividad";
+    //static final String KEY_CONTADOR =  "com.example.profesor.holamundo" + "CONTADOR";
 
 
-    int mContador;
+    int mContador; // Valor del contador
     TextView mTvContador; // view que muestra el valor del contador
 
 
@@ -49,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "Llamado onStart()");
-
+        // Lugar más idoneo para restaurar datos persistentes
+        /*//Ejemplo: Uso de objeto SahredPreferences
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        mContador = preferences.getInt(KEY_CONTADOR,0);
+        mTvContador.setText(String.valueOf(mContador));*/
     }
 
 
@@ -58,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "Llamado onPause()");
 
+        // Lugar más idóneo para guardar datos persistentes
+       /* // Ejemplo: guarda contador usando Objeto SaharePreferences.
 
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(KEY_CONTADOR,mContador);
+        editor.commit();*/
 
     }
 
@@ -83,4 +94,37 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // para evitar que el contador se ponga a cero cuando rotamos
+        // el dispositivo vamos a guardar el valor dentro de este método
+        // Este método se ejecuta siempre antes de que la actividad sea destruida
+        // OJO: no se ejecuta si: a) salimos de la actividad con boton back
+        //                        b) matamos la actividad con finish()
+
+        Log.d(TAG, "Llamado onSaveInstanceState(Bundle)");
+        // Mete valor del contador en el Bundle
+        // Este valor luego, lo sacamos en el onRestoreInstanceState(Bundle)
+        // y asignamos a mContador
+        outState.putInt(KEY_CONTADOR,mContador);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "Llamado onRestoreInstanceState(Bundle)");
+
+        // onRestoreInstanceState se invoca después de onStart(), cuando la activity
+        // se reinicializa desde el Bundle con el estado guardado por porSaveInstanceState.
+        // OJO:  no se llama si la actividad no fue destruida
+        // por el entorno de ejecución (como cuando el usuario presiona el
+        // botón Atrás o la actividad se cierra programáticamente usando finish ()).
+
+        // Recogemos valor del contador previamente guardo
+        mContador= savedInstanceState.getInt(KEY_CONTADOR);
+        mTvContador.setText(String.valueOf(mContador));
+    }*/
 }
