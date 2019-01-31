@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
     static final String TAG = "test_actividad";
-    //static final String KEY_CONTADOR =  "com.example.profesor.holamundo" + "CONTADOR";
+    static final String KEY_CONTADOR =  "com.example.profesor.holamundo" + "CONTADOR";
 
 
     int mContador; // Valor del contador
@@ -23,13 +22,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Llamado onCreate(Bundle)");
-
+        if(savedInstanceState != null)
+            Log.d(TAG, "Llamado onCreate(Bundle)");
+        else
+            Log.d(TAG, "Llamado onCreate(null)");
 
         // Carga el layout con el interface de usuario
         setContentView(R.layout.main_layout);
 
-        // Le asignamos acción al boton cuando este reciva un evento
+        // Le asignamos acción al botón cuando este reciba un evento
         // de click
 
         // Referencia al textview donde mostrar el número contador
@@ -57,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         mTvContador.setText(String.valueOf(mContador));*/
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "Llamado onResume()");
+
+    }
 
     @Override
     protected void onPause() {
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
@@ -103,11 +110,15 @@ public class MainActivity extends AppCompatActivity {
         // Este método se ejecuta siempre antes de que la actividad sea destruida
         // OJO: no se ejecuta si: a) salimos de la actividad con boton back
         //                        b) matamos la actividad con finish()
+        if(outState != null)
+            Log.d(TAG, "Llamado onSaveInstanceState(Bundle)");
+        else
+            Log.d(TAG, "Llamado onSaveInstanceState(null)");
 
-        Log.d(TAG, "Llamado onSaveInstanceState(Bundle)");
         // Mete valor del contador en el Bundle
         // Este valor luego, lo sacamos en el onRestoreInstanceState(Bundle)
         // y asignamos a mContador
+        Log.d(TAG,"Guardando valor del contador...");
         outState.putInt(KEY_CONTADOR,mContador);
 
     }
@@ -115,16 +126,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.d(TAG, "Llamado onRestoreInstanceState(Bundle)");
+
+        if(savedInstanceState != null)
+            Log.d(TAG, "Llamado onRestoreInstanceState(Bundle)");
+        else
+            Log.d(TAG, "Llamado onRestoreInstanceState(null)");
+
 
         // onRestoreInstanceState se invoca después de onStart(), cuando la activity
         // se reinicializa desde el Bundle con el estado guardado por porSaveInstanceState.
-        // OJO:  no se llama si la actividad no fue destruida
+        // OJO:  NO se llama si la actividad no fue destruida
         // por el entorno de ejecución (como cuando el usuario presiona el
         // botón Atrás o la actividad se cierra programáticamente usando finish ()).
 
-        // Recogemos valor del contador previamente guardo
+        // Recogemos valor del contador previamente guardo. Esto se puede hacer también
+        // en onCreate(Bundle)
+
+        Log.d(TAG,"Restaurando valor del contador...");
         mContador= savedInstanceState.getInt(KEY_CONTADOR);
         mTvContador.setText(String.valueOf(mContador));
-    }*/
+    }
+
+
 }
