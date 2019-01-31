@@ -110,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
         // Este método se ejecuta siempre antes de que la actividad sea destruida
         // OJO: no se ejecuta si: a) salimos de la actividad con boton back
         //                        b) matamos la actividad con finish()
-        if(outState != null)
-            Log.d(TAG, "Llamado onSaveInstanceState(Bundle)");
-        else
-            Log.d(TAG, "Llamado onSaveInstanceState(null)");
+
+        Log.d(TAG, "Llamado onSaveInstanceState(Bundle)");
+
 
         // Mete valor del contador en el Bundle
         // Este valor luego, lo sacamos en el onRestoreInstanceState(Bundle)
         // y asignamos a mContador
+
         Log.d(TAG,"Guardando valor del contador...");
         outState.putInt(KEY_CONTADOR,mContador);
 
@@ -127,10 +127,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if(savedInstanceState != null)
-            Log.d(TAG, "Llamado onRestoreInstanceState(Bundle)");
-        else
-            Log.d(TAG, "Llamado onRestoreInstanceState(null)");
+        Log.d(TAG, "Llamado onRestoreInstanceState(Bundle)");
 
 
         // onRestoreInstanceState se invoca después de onStart(), cuando la activity
